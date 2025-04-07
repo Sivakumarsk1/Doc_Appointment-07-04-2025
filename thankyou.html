@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Doctor C</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --success: #10b981;
+            --text: #374151;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            animation: fadeIn 0.8s ease-out;
+            padding: 15px;
+
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--primary);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirmation-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            margin-bottom: 30px;
+            transform: translateY(0);
+            transition: var(--transition);
+            animation: cardEntrance 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes cardEntrance {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+                box-shadow: var(--shadow);
+            }
+        }
+
+        .confirmation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .confirmation-icon {
+            font-size: 80px;
+            color: var(--success);
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .confirmation-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .confirmation-details {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        .appointment-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            text-align: left;
+            animation: fadeInUp 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(243, 244, 246, 0.5);
+            transition: var(--transition);
+        }
+
+        .info-item:hover {
+            background-color: rgba(229, 231, 235, 0.8);
+            transform: translateX(5px);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .address-value {
+            white-space: pre-line;
+            line-height: 1.5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .confirmation-card {
+                padding: 30px 20px;
+            }
+            
+            .confirmation-title {
+                font-size: 22px;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-card">
+        <div class="confirmation-icon">✓</div>
+        <div class="confirmation-title">Order Confirmed</div>
+        <div class="confirmation-details">
+            Thank you for choosing Doctor C. Your appointment has been successfully booked.
+        </div>
+        
+        <div class="appointment-info" id="appointmentInfo">
+        </div>
+        
+        <a href="index.html" class="btn">Back to Home</a>
+    </div>
+
+    <script>
+        window.onload = async function() {
+            const appointmentData = JSON.parse(localStorage.getItem("appointmentData"));
+            const familyData = JSON.parse(localStorage.getItem("familyData")) || [];
+            const appointmentInfo = document.getElementById("appointmentInfo");
+            
+            if (appointmentData) {
+                let infoHTML = `
+                    <div class="info-item">
+                        <div class="info-label">Date & Time:</div>
+                        <div class="info-value">${appointmentData.time}, ${appointmentData.date}</div>
+                    </div>
+                `;
+                
+                // Fetch and display address from API
+                try {
+    const response = await fetch("http://localhost:5001/api/address/latest");
+
+    if (response.ok) {
+        const latestAddress = await response.json();
+        infoHTML += `
+            <div class="info-item">
+                <div class="info-label">Address:</div>
+                <div class="info-value address-value">
+                    ${latestAddress.doorNo ? latestAddress.doorNo + ', ' : ''}${latestAddress.street}<br>
+                    ${latestAddress.landmark ? latestAddress.landmark + '<br>' : ''}
+                    ${latestAddress.area}, ${latestAddress.city}
+                </div>
+            </div>
+        `;
+    } else {
+        infoHTML += `
+            <div class="info-item">
+                <div class="info-label">Address:</div>
+                <div class="info-value">No address found</div>
+            </div>
+        `;
+    }
+} catch (error) {
+    console.error("Error fetching address:", error);
+    infoHTML += `
+        <div class="info-item">
+            <div class="info-label">Address:</div>
+            <div class="info-value">Address not available</div>
+        </div>`;
+}
+
+
+                if (appointmentData.email) {
+                    infoHTML += `
+                        <div class="info-item">
+                            <div class="info-label">Confirmation sent to:</div>
+                            <div class="info-value">${appointmentData.email}</div>
+                        </div>
+                    `;
+                }
+                
+                if (familyData.length > 0) {
+                    infoHTML += `<div class="info-item">
+                        <div class="info-label">Patients:</div>`;
+                    
+                    familyData.forEach(member => {
+                        infoHTML += `
+                            <div class="info-value">${member.name} (${member.age}/${member.gender})</div>
+                        `;
+                    });
+                    
+                    infoHTML += `</div>`;
+                }
+                
+                appointmentInfo.innerHTML = infoHTML;
+            }
+        };
+    </script>
+</body>
+</html>

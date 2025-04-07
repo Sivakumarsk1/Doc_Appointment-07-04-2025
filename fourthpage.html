@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Select Date and Time</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 15px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .area-input {
+      width: calc(100% - 20px);
+      padding: 12px 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .date-selection {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      gap: 8px;
+    }
+
+    .date-box {
+      flex: 1;
+      min-width: 0;
+      padding: 10px 5px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .date-box.selected {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .high-demand {
+      background-color: #fff8e1;
+      padding: 10px;
+      margin: 15px 0;
+      border-left: 5px solid orange;
+      font-size: 14px;
+    }
+
+    .time-slots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .slot {
+      padding: 10px 5px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      cursor: pointer;
+      background-color: white;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .slot.selected {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .add-address-btn {
+      margin-top: 15px;
+      padding: 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .address-info {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      right: 0;
+      background: white;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+      border-radius: 15px 15px 0 0;
+      padding: 20px;
+      transition: bottom 0.3s ease-in-out;
+      z-index: 1000;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .bottom-sheet.visible {
+      bottom: 0;
+    }
+
+    .bottom-sheet .close-btn {
+      text-align: right;
+      font-size: 20px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .bottom-sheet input {
+      width: calc(100% - 20px);
+      padding: 12px 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .bottom-sheet .save-btn {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 400px) {
+      .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .date-box {
+        font-size: 13px;
+        padding: 8px 3px;
+      }
+      
+      .slot {
+        font-size: 13px;
+        padding: 8px 3px;
+      }
+    }
+
+    @media (min-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .bottom-sheet {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <input type="text" class="area-input" placeholder="Enter your Pincode"/>
+
+    <h3>Select date and time</h3>
+    <div class="date-selection" id="dateSelection"></div>
+
+    <div class="time-slots">
+      <button class="slot">05:45 AM</button>
+      <button class="slot">06:10 AM</button>
+      <button class="slot">06:35 AM</button>
+      <button class="slot">07:00 AM</button>
+      <button class="slot">07:25 AM</button>
+      <button class="slot">07:50 AM</button>
+      <button class="slot">08:15 AM</button>
+      <button class="slot">08:40 AM</button>
+      <button class="slot">09:30 AM</button>
+      <button class="slot">09:55 AM</button>
+      <button class="slot">10:20 AM</button>
+      <button class="slot">10:45 AM</button>
+      <button class="slot">11:10 AM</button>
+      <button class="slot">11:35 AM</button>
+      <button class="slot">12:05 PM</button>
+      <button class="slot">12:25 PM</button>
+      <button class="slot">12:50 PM</button>
+      <button class="slot">01:15 PM</button>
+      <button class="slot">01:35 PM</button>
+      <button class="slot">02:00 PM</button>
+      <button class="slot">02:25 PM</button>
+      <button class="slot">02:50 PM</button>
+      <button class="slot">03:15 PM</button>
+      <button class="slot">03:35 PM</button>
+      <button class="slot">04:00 PM</button>
+      <button class="slot">04:25 PM</button>
+      <button class="slot">04:50 PM</button>
+      <button class="slot">05:15 PM</button>
+    </div>
+
+    <p class="address-info">This address will help our technician reach you on time</p>
+    <button class="add-address-btn" onclick="openBottomSheet()">Add Address</button>
+  </div>
+
+  <div class="bottom-sheet" id="bottomSheet">
+    <div class="close-btn" onclick="closeBottomSheet()">✖</div>
+    <h3>Enter Your Address</h3>
+
+    <input type="text" id="area" placeholder="Area"/>
+    <input type="text" id="city" placeholder="City"/>
+    <input type="text" id="landmark" placeholder="Landmark"/>
+    <input type="text" id="street" placeholder="Street Name"/>
+    <input type="text" id="doorNo" placeholder="Door No"/>
+
+    <button class="save-btn" onclick="saveAddress()">Save Address</button>
+  </div>
+
+  <script>
+    function getDayName(date) {
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      return days[date.getDay()];
+    }
+
+    function generateDateSelection() {
+      const dateSelection = document.getElementById("dateSelection");
+      dateSelection.innerHTML = "";
+
+      for (let i = 0; i < 3; i++) {
+        let futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + i);
+
+        let dayName = getDayName(futureDate);
+        let dateNumber = futureDate.getDate();
+
+        let dateBox = document.createElement("div");
+        dateBox.classList.add("date-box");
+        if (i === 0) dateBox.classList.add("selected");
+
+        dateBox.innerHTML = `${dayName} <br> <span>${dateNumber}</span>`;
+
+        dateBox.addEventListener("click", function () {
+          document.querySelectorAll(".date-box").forEach((box) =>
+            box.classList.remove("selected")
+          );
+          this.classList.add("selected");
+        });
+
+        dateSelection.appendChild(dateBox);
+      }
+    }
+
+    function enableTimeSelection() {
+      const timeSlots = document.querySelectorAll(".slot");
+      timeSlots.forEach((slot) => {
+        slot.addEventListener("click", function () {
+          document.querySelectorAll(".slot").forEach((s) =>
+            s.classList.remove("selected")
+          );
+          this.classList.add("selected");
+        });
+      });
+    }
+
+    async function openBottomSheet() {
+      const selectedDateBox = document.querySelector(".date-box.selected");
+      const selectedTime = document.querySelector(".slot.selected");
+
+      if (!selectedDateBox || !selectedTime) {
+        alert("Please select a date and time before adding an address.");
+        return;
+      }
+
+      const dayName = selectedDateBox.textContent.split("\n")[0].trim();
+      const dateNumber = selectedDateBox.querySelector("span").textContent;
+      const currentYear = new Date().getFullYear();
+      const date = `${dayName}, ${dateNumber} ${currentYear}`;
+      const time = selectedTime.textContent.trim();
+
+      try {
+        const response = await fetch("http://localhost:5001/api/check-slot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ date, time })
+        });
+
+        const result = await response.json();
+
+        if (!result.available) {
+          alert("Sorry, this slot has already been booked. Please choose another one.");
+          return;
+        }
+
+        document.getElementById("bottomSheet").classList.add("visible");
+      } catch (error) {
+        console.error("Error checking slot availability:", error);
+        alert("Something went wrong while checking availability.");
+      }
+    }
+
+    function closeBottomSheet() {
+      document.getElementById("bottomSheet").classList.remove("visible");
+    }
+
+    function saveAddress() {
+      const area = document.getElementById("area").value;
+      const city = document.getElementById("city").value;
+      const landmark = document.getElementById("landmark").value;
+      const street = document.getElementById("street").value;
+      const doorNo = document.getElementById("doorNo").value;
+
+      if (!area || !city || !street) {
+        alert("Please fill in required address fields (Area, City, Street).");
+        return;
+      }
+
+      const selectedDateBox = document.querySelector(".date-box.selected");
+      const selectedTimeSlot = document.querySelector(".slot.selected");
+
+      const dayName = selectedDateBox.textContent.split("\n")[0].trim();
+      const dateNumber = selectedDateBox.querySelector("span").textContent;
+      const currentYear = new Date().getFullYear();
+      const time = selectedTimeSlot.textContent.trim();
+
+      const appointmentData = {
+        date: `${dayName}, ${dateNumber} ${currentYear}`,
+        time: time
+      };
+      localStorage.setItem("appointmentData", JSON.stringify(appointmentData));
+
+      const addressData = {
+        doorNo: doorNo,
+        street: street,
+        landmark: landmark,
+        area: area,
+        city: city
+      };
+
+      fetch("http://localhost:5001/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(addressData)
+      })
+      .then((response) => response.text())
+      .then((data) => {
+        alert(data);
+        window.location.href = "confirmapp.html";
+      })
+      .catch((error) => console.error("Error:", error));
+    }
+
+    // Call functions on page load
+    window.onload = () => {
+      generateDateSelection();
+      enableTimeSelection();
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review & Confirm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text: #374151;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.8s ease-out;
+            padding: 10px;
+
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            background: var(--white);
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border-radius: 16px;
+            transform: translateY(0);
+            transition: var(--transition);
+            animation: cardEntrance 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes cardEntrance {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+                box-shadow: var(--shadow);
+            }
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section {
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        #dateSelection {
+            background-color: rgba(239, 246, 255, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.2); }
+            70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+
+        #address {
+            background-color: rgba(236, 253, 245, 0.5);
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 4px solid var(--success);
+        }
+
+        .patient-list {
+            margin: 10px 0;
+        }
+
+        .patient-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: var(--light-gray);
+            border-radius: 12px;
+            transition: var(--transition);
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .patient-item:hover {
+            transform: translateX(5px);
+            background-color: rgba(229, 231, 235, 0.8);
+        }
+
+        .patient-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .patient-details {
+            color: var(--text);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .test-name {
+            font-weight: 500;
+            margin-top: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: 700;
+            text-align: right;
+            padding: 20px 0;
+            color: var(--primary);
+        }
+
+        h3 {
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .cashback-option {
+            margin: 15px 0;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .cashback-option:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+        }
+
+        .cashback-option h4 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        .cashback-option ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .cashback-option li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--text);
+            opacity: 0.8;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .radio-option input {
+            margin-right: 12px;
+            accent-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .radio-option label {
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .confirm-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirm-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .confirm-btn:active {
+            transform: translateY(1px);
+        }
+
+        .confirm-btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0.2), rgba(255,255,255,0));
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+        }
+
+        .confirm-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Bottom Sheet Styles */
+        .bottom-sheet {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 20px 20px 0 0;
+            padding: 25px;
+            transition: bottom 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 1000;
+        }
+
+        .bottom-sheet.visible {
+            bottom: 0;
+        }
+
+        .bottom-sheet h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 20px;
+        }
+
+        .bottom-sheet input {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--light-gray);
+        }
+
+        .bottom-sheet input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .bottom-sheet .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .bottom-sheet .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .bottom-sheet .close-btn {
+            text-align: right;
+            font-size: 24px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            color: var(--text);
+            opacity: 0.6;
+            transition: var(--transition);
+        }
+
+        .bottom-sheet .close-btn:hover {
+            opacity: 1;
+            color: var(--primary);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .overlay.visible {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 15px 0;
+            }
+            
+            .confirm-btn, .bottom-sheet .submit-btn {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Review & Confirm</h2>
+
+        <div class="date-selection">
+            <p id="dateSelection"></p>
+        </div>
+
+        <!-- Address Section -->
+        <div class="section">
+            <p id="address"></p>
+        </div>
+
+        <!-- Patients List Section -->
+        <div class="section patient-list" id="patientsList">
+            <h3>Patients</h3>
+            <!-- Patient items will be added dynamically here -->
+        </div>
+
+        <!-- Tests Section -->
+        <div class="section">
+            <h3>Tests</h3>
+            <div class="test-item">
+                <span>Basic Health Check</span>
+                <span class="price">₹ 199</span>
+            </div>
+        </div>
+
+        <!-- Total Section -->
+        <div class="total">Total: ₹ <span id="totalAmount">199</span></div>
+
+        <!-- Cashback Options Section -->
+        <div class="section">
+            <h3>Pick a Cashback Option</h3>
+            
+            <div class="cashback-option">
+                <div class="radio-option">
+                    <input type="radio" id="noCashback" name="cashback" checked>
+                    <label for="noCashback"><b>No Cashback</b></label>
+                </div>
+                <ul>
+                    <li>I Don't Want Cashback</li>
+                    <li>You will pay the standard amount</li>
+                    <li>No cashback will be added to your wallet</li>
+                    <li>You will miss out on amazing app only deals</li>
+                </ul>
+            </div>
+            
+            <div class="cashback-option">
+                <div class="radio-option">
+                    <input type="radio" id="doctorCOffer" name="cashback">
+                    <label for="doctorCOffer"><b>Doctor C App Offer</b></label>
+                </div>
+                <ul>
+                    <li>₹50 Cashback</li>
+                    <li>Download Doctor C App after your booking for ₹100 cashback</li>
+                    <li>Cashback will be added to Doctor C wallet within 48 hours of your appointment</li>
+                    <li>Enjoy exclusive deals with Doctor C App</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Confirm Button -->
+        <button class="confirm-btn" id="confirmBtn">Confirm Appointment</button>
+    </div>
+
+    <!-- Bottom Sheet for Email Entry -->
+    <div class="overlay" id="overlay"></div>
+    <div class="bottom-sheet" id="emailBottomSheet">
+        <div class="close-btn" onclick="closeEmailSheet()">✖</div>
+        <h3>Enter Your Email</h3>
+        <input type="email" id="userEmail" placeholder="Enter your email address">
+        <div class="spinner" id="spinner"></div>
+        <button class="submit-btn" onclick="submitAppointment()">Confirm & Send Email</button>
+    </div>
+
+    <script>
+        // Helper functions for bottom sheet
+        function openEmailSheet() {
+            document.getElementById("overlay").classList.add("visible");
+            document.getElementById("emailBottomSheet").classList.add("visible");
+        }
+
+        function closeEmailSheet() {
+            document.getElementById("overlay").classList.remove("visible");
+            document.getElementById("emailBottomSheet").classList.remove("visible");
+        }
+
+        // Function to show loading spinner
+        function showLoading(show) {
+            const spinner = document.getElementById("spinner");
+            const submitBtn = document.querySelector(".submit-btn");
+            
+            if (show) {
+                spinner.style.display = "block";
+                submitBtn.style.display = "none";
+            } else {
+                spinner.style.display = "none";
+                submitBtn.style.display = "block";
+            }
+        }
+
+        // Function to submit appointment and send email
+        async function submitAppointment() {
+            const email = document.getElementById("userEmail").value;
+            if (!email) {
+                alert("Please enter your email address");
+                return;
+            }
+
+            // Validate email format
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Please enter a valid email address");
+                return;
+            }
+
+            showLoading(true);
+
+            try {
+                // Get all the appointment data
+                const appointmentData = JSON.parse(localStorage.getItem("appointmentData"));
+                const familyData = JSON.parse(localStorage.getItem("familyData")) || [];
+                const address = document.getElementById("address").innerText;
+
+                // For simplicity, we'll just use the first family member or "You"
+                const patient = familyData.length > 0 ? familyData[0] : { name: "You", age: "", gender: "" };
+
+                // Prepare data to send
+                const appointmentDetails = {
+                    email: email,
+                    name: patient.name,
+                    age: patient.age || "",
+                    gender: patient.gender || "",
+                    date: appointmentData.date,
+                    time: appointmentData.time,
+                    address: address,
+                    testName: "Basic Health Check",
+                    amount: "₹199"
+                };
+
+                const response = await fetch("http://localhost:5001/api/appointment/confirm", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(appointmentDetails)
+                });
+
+                const data = await response.text();
+
+                if (response.ok) {
+                    alert("Appointment confirmed! Check your email for details.");
+                    closeEmailSheet();
+                    // Optionally redirect to a thank you page
+                  window.location.href = "thankyou.html";
+                } else {
+                    throw new Error(data || "Failed to confirm appointment");
+                }
+            } catch (error) {
+                alert("An error occurred. Please try again.");
+                console.error("Error:", error);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Main initialization when page loads
+        window.onload = function () {
+            // Get appointment data from localStorage
+            const appointmentData = JSON.parse(localStorage.getItem("appointmentData"));
+            const familyData = JSON.parse(localStorage.getItem("familyData")) || [];
+            
+            // Display appointment details more prominently
+            if (appointmentData) {
+                const dateTimeDisplay = document.getElementById("dateSelection");
+                dateTimeDisplay.innerHTML = `
+                    <strong>Appointment Time:</strong><br>
+                    ${appointmentData.time}<br>
+                    ${appointmentData.date}
+                `;
+                
+                // Add some styling to the date-time display
+                dateTimeDisplay.style.backgroundColor = "rgba(239, 246, 255, 0.5)";
+                dateTimeDisplay.style.padding = "15px";
+                dateTimeDisplay.style.borderRadius = "12px";
+                dateTimeDisplay.style.margin = "15px 0";
+                dateTimeDisplay.style.borderLeft = "4px solid var(--primary)";
+            } else {
+                alert("No appointment data found! Please select date, time, and address first.");
+                window.location.href = "fourthpage.html";
+            }
+
+            // Fetch and display address
+            fetch(`http://localhost:5001/api/address/latest`)
+    .then(response => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+    })
+    .then(address => {
+        document.getElementById("address").innerHTML = `
+            <strong>Address:</strong><br>
+            ${address.doorNo}, ${address.street}<br>
+            ${address.landmark}<br>
+            ${address.area}, ${address.city}
+        `;
+    })
+    .catch(error => {
+        console.error("Error fetching address:", error);
+        document.getElementById("address").innerText = "Failed to load address.";
+    });
+
+
+            // Display patients
+            const patientsList = document.getElementById("patientsList");
+            const totalAmount = document.getElementById("totalAmount");
+            
+            if (familyData.length > 0) {
+                familyData.forEach((member) => {
+                    const patientItem = document.createElement("div");
+                    patientItem.className = "patient-item";
+                    patientItem.innerHTML = `
+                        <div class="patient-name">${member.name}</div>
+                        <div class="patient-details">${member.age}/${member.gender}</div>
+                        <div class="test-name">Basic Health Check @ Home</div>
+                    `;
+                    patientsList.appendChild(patientItem);
+                });
+
+                // Update total amount based on the number of patients
+                const total = 199 * familyData.length;
+                totalAmount.textContent = total;
+            } else {
+                // If no family members, show just the primary patient
+                const patientItem = document.createElement("div");
+                patientItem.className = "patient-item";
+                patientItem.innerHTML = `
+                    <div class="patient-name">You</div>
+                    <div class="test-name">Basic Health Check @ Home</div>
+                `;
+                patientsList.appendChild(patientItem);
+            }
+
+            document.getElementById("confirmBtn").addEventListener("click", function() {
+                openEmailSheet();
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Family Member</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="thirdpage.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <span class="back-arrow" onclick="goBack()">&#8592;</span>
+            <h2>Select Family Member</h2>
+        </div>
+
+        <!-- Alert Message -->
+        <!-- <div class="alert">
+            <span class="alert-icon">&#9888;</span>
+            <p>You can select family members for the package</p>
+        </div> -->
+
+        <!-- Family Members List -->
+        <div class="family-list" id="familyList"></div>
+
+        <!-- Add Family Members -->
+        <div class="add-family">
+            <div class="price">
+                <span class="old-price">₹999</span> <span class="new-price">₹199/person</span>
+            </div>
+        </div>
+
+        <!-- Next Button -->
+        <button class="next-btn" onclick="validateSelection()">Next</button>
+    </div>
+
+    <script>
+        // Function to go back
+        function goBack() {
+            window.history.back();
+        }
+
+        // Fetch family members from localStorage and display them
+        function loadFamilyMembers() {
+            const familyData = JSON.parse(localStorage.getItem("familyData")) || [];
+            const familyList = document.getElementById("familyList");
+            familyList.innerHTML = ""; // Clear previous content
+
+            if (familyData.length === 0) {
+                familyList.innerHTML = "<p style='text-align:center; color:#666;'>No family members added yet.</p>";
+                return;
+            }
+
+            familyData.forEach((member, index) => {
+                const memberElement = document.createElement("label");
+                memberElement.classList.add("family-item");
+                memberElement.innerHTML = `
+                    <span>${member.name} <small>(${member.age}/${member.gender.charAt(0)})</small></span>
+                    <input type="checkbox" name="family-member" value="${index}">
+                `;
+                familyList.appendChild(memberElement);
+            });
+        }
+
+        // Function to validate selection before proceeding
+        function validateSelection() {
+            // Removed the validation for minimum 2 members
+            window.location.href = "fourthpage.html"; // Redirect to the final page
+        }
+
+        // Load members on page load
+        loadFamilyMembers();
+    </script>
+</body>
+</html>

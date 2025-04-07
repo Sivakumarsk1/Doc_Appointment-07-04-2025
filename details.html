@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Family Member</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --secondary: #10b981;
+            --text: #374151;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            color: var(--primary-light);
+            transform: translateX(-3px);
+        }
+
+        .back-button::before {
+            content: "←";
+            margin-right: 8px;
+            font-size:40px;
+            size: 20;
+
+        }
+
+        #familyMembers {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            transition: var(--transition);
+        }
+
+        .member {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .member:last-child {
+            border-bottom: none;
+        }
+
+        .member h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: var(--light-gray);
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+        }
+
+        .gender-selection {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .gender-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .gender-option input {
+            display: none;
+        }
+
+        .gender-option span {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 20px;
+            background-color: var(--light-gray);
+            transition: var(--transition);
+        }
+
+        .gender-option input:checked + span {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        h3 {
+            margin: 20px 0 15px;
+            color: var(--text);
+            font-size: 18px;
+        }
+
+        .family-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .family-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            background-color: var(--white);
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .family-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .pricing {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .discounted {
+            font-size: 16px;
+            color: var(--secondary);
+            margin-left: 10px;
+            text-decoration: line-through;
+        }
+
+        .next-button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .next-button:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .family-buttons {
+                flex-direction: column;
+            }
+            
+            .family-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="back-button" onclick="window.history.back()">Add Family Member</div>
+
+        <div id="familyMembers">
+            <div class="member">
+                <h4>Primary Member</h4>
+                <label for="name">Name</label>
+                <input type="text" class="name" placeholder="Enter name">
+
+
+                <label for="age">Age</label>
+                <select class="age">
+                    <option value="">Select Age</option> 
+                </select>
+
+                <label>Gender</label>
+                <div class="gender-selection">
+                    <label class="gender-option">
+                        <input type="radio" name="gender-1" value="Male">
+                        <span>Male</span>
+                    </label>
+                    <label class="gender-option">
+                        <input type="radio" name="gender-1" value="Female">
+                        <span>Female</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Family Members -->
+        <h3>Add Family Members</h3>
+        <div class="family-buttons">
+            <button class="family-btn" onclick="addMember('Family Member')">➕ Add Family Member</button>
+            <button class="family-btn" onclick="addMember('Dad')">➕ Add Dad</button>
+            <button class="family-btn" onclick="addMember('Spouse')">➕ Add Spouse</button>
+        </div>
+
+        <!-- Pricing -->
+        <div class="pricing">₹999 <span class="discounted">₹199/person</span></div>
+
+        <!-- Next Button -->
+        <button class="next-button" onclick="saveData()">Next</button>
+    </div>
+
+    <script>
+        // Function to populate age dropdown
+        function populateAgeDropdown(selectElement) {
+            for (let i = 1; i <= 120; i++) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.textContent = i;
+                selectElement.appendChild(option);
+            }
+        }
+
+        // Populate the first age dropdown
+        populateAgeDropdown(document.querySelector(".age"));
+
+        // Function to add a new family member section
+        function addMember(role) {
+            const familyContainer = document.getElementById("familyMembers");
+            const memberCount = familyContainer.children.length + 1; // Unique identifier for gender radio
+
+            const newMember = document.createElement("div");
+            newMember.classList.add("member");
+
+            newMember.innerHTML = `
+                <h4>${role}</h4>
+                <label for="name">Name</label>
+                <input type="text" class="name" placeholder="Enter name">
+
+                <label for="age">Age</label>
+                <select class="age">
+                    <option value="">Select Age</option> 
+                </select>
+
+                <label>Gender</label>
+                <div class="gender-selection">
+                    <label class="gender-option">
+                        <input type="radio" name="gender-${memberCount}" value="Male">
+                        <span>Male</span>
+                    </label>
+                    <label class="gender-option">
+                        <input type="radio" name="gender-${memberCount}" value="Female">
+                        <span>Female</span>
+                    </label>
+                </div>
+            `;
+
+            familyContainer.appendChild(newMember);
+
+            // Populate the new age dropdown
+            populateAgeDropdown(newMember.querySelector(".age"));
+            
+            // Smooth scroll to the new member
+            newMember.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Function to save data to localStorage
+        function saveData() {
+            const members = document.querySelectorAll(".member");
+            let familyData = [];
+
+            members.forEach((member) => {
+                const name = member.querySelector(".name").value;
+                const age = member.querySelector(".age").value;
+                const gender = member.querySelector("input[type='radio']:checked")?.value;
+
+                if (name && age && gender) {
+                    familyData.push({ name, age, gender });
+                }
+            });
+
+            if (familyData.length === 0) {
+                alert("Please add at least one family member");
+                return;
+            }
+
+            // Add button click animation
+            const nextButton = document.querySelector(".next-button");
+            nextButton.style.transform = "scale(0.95)";
+            setTimeout(() => {
+                nextButton.style.transform = "scale(1)";
+            }, 100);
+
+            localStorage.setItem("familyData", JSON.stringify(familyData));
+            window.location.href = "thirdpage.html";
+        }
+    </script>
+
+</body>
+</html>
